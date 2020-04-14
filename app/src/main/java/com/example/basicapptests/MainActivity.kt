@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var queue: RequestQueue
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,24 +25,27 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-
-            downloadQuote(view);
+            downloadAndShowQuote(view)
         }
     }
 
-    fun downloadQuote(view: View) {
+    fun downloadAndShowQuote(view: View) {
+        downloadQuote { str ->
+            Snackbar
+                .make(view, str, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+    }
+
+    fun downloadQuote(listener: (String) -> Unit) {
         val url = "https://api.quotable.io/random"
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener { response ->
-                Snackbar
-                    .make(view, response["content"].toString(), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                listener(response["content"].toString())
             },
             Response.ErrorListener { error ->
                 // Crude error presentation
-                Snackbar
-                    .make(view, error.message ?: error.toString(), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                listener(error.message ?: error.toString())
             }
         )
 

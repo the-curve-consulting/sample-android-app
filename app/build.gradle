@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.basicapptests"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "io.mockk:mockk-android:1.9.3"
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testImplementation "io.mockk:mockk:1.9.3"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
